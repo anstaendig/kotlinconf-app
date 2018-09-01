@@ -5,6 +5,7 @@ rootProject.name = 'kotlinconf-app'
 include 'backend'
 include 'common'
 include 'common-jvm'
+include 'konf-swift-framework'
 
 if (INCLUDE_ANDROID == "true") {
     include 'android', 'android:app'
