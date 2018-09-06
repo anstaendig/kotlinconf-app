@@ -14,8 +14,8 @@ import android.support.v7.widget.Toolbar
 import android.view.*
 import android.widget.*
 import com.bumptech.glide.*
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.android.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.android.*
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.applyRecursively

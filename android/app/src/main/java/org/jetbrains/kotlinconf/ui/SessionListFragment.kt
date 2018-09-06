@@ -14,8 +14,8 @@ import android.view.*
 import android.widget.*
 import com.brandongogetap.stickyheaders.*
 import com.brandongogetap.stickyheaders.exposed.*
-import kotlinx.coroutines.experimental.*
-import kotlinx.coroutines.experimental.android.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.android.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.*
 import org.jetbrains.anko.support.v4.*
