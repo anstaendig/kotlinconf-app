@@ -5,7 +5,7 @@ import konfios
 class SessionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let konfService = AppDelegate.me.konfService
 
-    var session: KTSession!
+    var session: KTSessionModel!
     var speakers: [KTSpeaker] = []
 
     @IBOutlet private weak var scrollView: UIScrollView!
@@ -20,17 +20,17 @@ class SessionViewController : UIViewController, UITableViewDataSource, UITableVi
         guard let session = self.session else { return }
 
         titleLabel.text = session.title
-        timeLabel.text = KSFUtil.renderInterval(start: session.startsAt!, end: session.endsAt!)
-        descriptionLabel.text = session.description ?? ""
+        timeLabel.text = KTStdlibPair(first: session.startsAt, second: session.endsAt).toReadableString()
+        descriptionLabel.text = session.descriptionText
         usersTable.reloadData()
 
         updateFavoriteButtonTitle()
 
-        let model = konfService.sessionsModels[session.id!]!
+        let model = konfService.getSessionById(id: session.id)
         let it = model.speakers.iterator()
         
         speakers = []
-        while (it.hasNext()) { speakers.append(it.next()! as! KSFSpeaker) }
+        while (it.hasNext()) { speakers.append(it.next()! as! KTSpeaker) }
 
         tags.removeAllTags()
 
@@ -57,16 +57,16 @@ class SessionViewController : UIViewController, UITableViewDataSource, UITableVi
     }
 
     private func updateFavoriteButtonTitle(isFavorite: Bool? = nil) {
-        let shouldCheck = isFavorite ?? konfService.isFavorite(session: session)
+        let shouldCheck = isFavorite ?? konfService.isFavorite(sessionId: session.id)
         favoriteButton.setTitle(shouldCheck ? "❤️" : "🖤", for: .normal)
     }
 
     @IBAction func favorited(_ sender: Any) {
-        konfService.toggleFavorite(session: session).then { (result) -> KSFStdlibUnit in
-            let favorite = result as! NSNumber
-            self.updateFavoriteButtonTitle(isFavorite: favorite != 0)
-            return KUnit
-        }
+//        konfService.toggleFavorite(session: session).then { (result) -> KTStdlibUnit in
+//            let favorite = result as! NSNumber
+//            self.updateFavoriteButtonTitle(isFavorite: favorite != 0)
+//            return KTUnit
+//        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -92,8 +92,8 @@ class SessionViewController : UIViewController, UITableViewDataSource, UITableVi
 
         let alert = UIAlertController(title: speaker.fullName, message: speaker.bio, preferredStyle: .actionSheet)
         
-        for link in speaker.links ?? [] {
-            guard let action = (link as? KSFLink)?.getAction() else { continue }
+        for link in speaker.links {
+            guard let action = link.getAction() else { continue }
             alert.addAction(action)
         }
 
@@ -103,14 +103,11 @@ class SessionViewController : UIViewController, UITableViewDataSource, UITableVi
     }
 }
 
-fileprivate extension KSFLink {
+fileprivate extension KTLink {
     func getAction() -> UIAlertAction? {
         guard
-            let linkType = self.linkType,
             linkType == "Twitter",
-            let title = self.title,
-            let urlText = self.url,
-            let url = URL(string: urlText)
+            let url = URL(string: self.url)
         else { return nil }
 
         // + (instancetype)actionWithTitle:(NSString *)title style:(UIAlertActionStyle)style handler:(void (^)(UIAlertAction *action))handler;
@@ -149,7 +146,7 @@ class SessionUserTableViewCell : UITableViewCell {
     }
 
     func setup(for user: KTSpeaker) {
-        nameLabel.text = user.fullName ?? "Anonymous"
+        nameLabel.text = user.fullName
         icon.loadUserIcon(url: user.profilePicture)
     }
 }

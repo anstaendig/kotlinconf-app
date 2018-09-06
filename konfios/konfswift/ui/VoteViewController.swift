@@ -3,7 +3,7 @@ import konfios
 
 class VoteViewController : UIViewController {
     private let konfService = AppDelegate.me.konfService
-    var session: KTSession!
+    var session: KTSessionModel!
 
     @IBOutlet private weak var titleLabel: UILabel!
 
@@ -19,7 +19,7 @@ class VoteViewController : UIViewController {
     }
 
     private func highlightRatingButtons(rating: KTSessionRating? = nil) {
-        let currentRating = rating ?? konfService.getRating(session: session)
+        let currentRating = rating ?? konfService.getRating(sessionId: session.id)
 
         let buttons: [KTSessionRating: UIButton] = [
             .good: goodButton,
@@ -44,25 +44,25 @@ class VoteViewController : UIViewController {
         }
     }
 
-    private func reportRating(_ rating: KSFSessionRating) {
+    private func reportRating(_ rating: KTSessionRating) {
         guard let session = self.session else { return }
 
-        konfService.setRating(session: session, rating: rating).then { (result) -> KSFStdlibUnit in
-            let newRating = result as? KSFSessionRating
-            self.highlightRatingButtons(rating: newRating)
-            self.showPopupText(title: result != nil ? "Thank you for the feedback!" : "Your vote was cleared.")
-            return KUnit
-        }.catch { (error) -> KSFStdlibUnit in
-            switch (error) {
-            case KSFKonfServiceCompanion().early_SUBMITTION_ERROR:
-                self.showPopupText(title: "Too early to set rating")
-            case KSFKonfServiceCompanion().late_SUBMITTION_ERROR:
-                self.showPopupText(title: "Too late to set rating")
-            default:
-                self.showPopupText(title: "Can't set rating - unknown error")
-            }
-            return KUnit
-        }
+//        konfService.setRating(session: session, rating: rating).then { (result) -> KTStdlibUnit in
+//            let newRating = result as? KSFSessionRating
+//            self.highlightRatingButtons(rating: newRating)
+//            self.showPopupText(title: result != nil ? "Thank you for the feedback!" : "Your vote was cleared.")
+//            return KUnit
+//        }.catch { (error) -> KTStdlibUnit in
+//            switch (error) {
+//            case KSFKonfServiceCompanion().early_SUBMITTION_ERROR:
+//                self.showPopupText(title: "Too early to set rating")
+//            case KSFKonfServiceCompanion().late_SUBMITTION_ERROR:
+//                self.showPopupText(title: "Too late to set rating")
+//            default:
+//                self.showPopupText(title: "Can't set rating - unknown error")
+//            }
+//            return KUnit
+//        }
     }
 
     @IBAction private func goodPressed(_ sender: Any) {

@@ -53,4 +53,31 @@ class KonfAppDataModel(
 
     override fun isFavorite(sessionId: String): Boolean =
         state.favorites.contains(Favorite(sessionId))
+
+    /**
+     * Native callback API
+     */
+    override fun update(callback: NativeCallback<Unit>) {
+        wrapCallback(callback) {
+            update()
+        }
+    }
+
+    override fun addRating(sessionId: String, rating: SessionRating, callback: NativeCallback<Unit>) {
+        wrapCallback(callback) {
+            addRating(sessionId, rating)
+        }
+    }
+
+    override fun removeRating(sessionId: String, callback: NativeCallback<Unit>) {
+        wrapCallback(callback) {
+            removeRating(sessionId)
+        }
+    }
+
+    override fun setFavorite(sessionId: String, isFavorite: Boolean, callback: NativeCallback<Unit>) {
+        wrapCallback(callback) {
+            setFavorite(sessionId, isFavorite)
+        }
+    }
 }

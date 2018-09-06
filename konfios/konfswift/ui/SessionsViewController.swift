@@ -1,11 +1,16 @@
 import UIKit
 import konfios
 
+enum SessionsMode {
+    case all
+    case favorites
+}
+
 class SessionsViewController: UITableViewController {
     private static let SEND_ID_ONCE_KEY = "send_uuid_once"
     private lazy var konfService = AppDelegate.me.konfService
-//    private var mode: KTKonfServiceSessionsListMode = .all
-    private var sessionsTableData: [[KTSession]] = []
+    private var mode = SessionsMode.all
+    private var sessionsTableData: [[KTSessionModel]] = []
 
     @IBOutlet weak var pullToRefresh: UIRefreshControl!
 
@@ -32,10 +37,6 @@ class SessionsViewController: UITableViewController {
         let userDefaults = UserDefaults.standard
         guard !userDefaults.bool(forKey: SessionsViewController.SEND_ID_ONCE_KEY) else { return false }
         
-        konfService.getAll { (data, error) -> KTStdlibUnit in
-            return KUnit
-        }
-        
 //        konfService.register().then(block: { (result) -> KTStdlibUnit in
 //            self.refreshSessions(self)
 //
@@ -50,17 +51,17 @@ class SessionsViewController: UITableViewController {
     }
 
     @IBAction func refreshSessions(_ sender: Any) {
-        konfService.getAll { (data, error) -> KTStdlibUnit in
-            return KUnit
+        konfService.update { (data, error) -> KTStdlibUnit in
+            self.pullToRefresh?.endRefreshing()
+            
+            if (error != nil) {
+                error?.printStackTrace()
+                self.showPopupText(title: "Failed to refresh")
+            } else {
+                self.updateTableContent()
+            }
+            return KTUnit
         }
-//        konfService.refresh().then { (result) -> KTStdlibUnit in
-//            self.pullToRefresh?.endRefreshing()
-//            self.updateTableContent()
-//            return KUnit
-//        }.catch { (error) -> KTStdlibUnit in
-//            self.showPopupText(title: "Failed to refresh")
-//            return KUnit
-//        }
     }
 
     private func refreshFavorites() {
@@ -85,21 +86,17 @@ class SessionsViewController: UITableViewController {
     private func updateTableContent() {
         switch self.mode {
         case .all:
-//            fillDataWith(sessions: konfService.sessions)
+            fillDataWith(sessions: konfService.sessions)
             break
         case .favorites:
-//            fillDataWith(sessions: konfService.sessions.filter({ (session) -> Bool in
-//                return konfService.isFavorite(session: session)
-//            }))
-            break
-        default:
+            fillDataWith(sessions: konfService.favorites)
             break
         }
 
         self.tableView?.reloadData()        
     }
     
-    private func fillDataWith(sessions: [KTSession]) {
+    private func fillDataWith(sessions: [KTSessionModel]) {
 //        let sortedSessions = sessions.sorted(by: { (left, right) -> Bool in
 //            let byComparator = left.compareTo(other: right)
 //            if byComparator != 0 { return byComparator < 0 }
@@ -107,17 +104,17 @@ class SessionsViewController: UITableViewController {
 //            if left.id != right.id { return left.id!.compare(right.id!).rawValue > 0 }
 //            return false
 //        })
-//
-//        sessionsTableData = []
-//        sortedSessions.forEach({ (session) in
-//            if sessionsTableData.count == 0 ||
-//                sessionsTableData.last!.first!.startsAt!.compareTo(otherDate: session.startsAt!) != 0 {
-//                sessionsTableData.append([session]);
-//                return
-//            }
-//
-//            sessionsTableData[sessionsTableData.count - 1].append(session)
-//        })
+
+        sessionsTableData = []
+        sessions.forEach({ (session) in
+            if sessionsTableData.count == 0 ||
+                sessionsTableData.last!.first!.startsAt != session.startsAt  {
+                sessionsTableData.append([session]);
+                return
+            }
+
+            sessionsTableData[sessionsTableData.count - 1].append(session)
+        })
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -163,8 +160,8 @@ class SessionsTableViewCell : UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var icon: UIImageView!
 
-    func setup(for session: KTSession) {
+    func setup(for session: KTSessionModel) {
         titleLabel.text = session.title
-        dateLabel.text = session.startsAt
+        dateLabel.text = session.startsAt.toReadableDateTimeString()
     }
 }

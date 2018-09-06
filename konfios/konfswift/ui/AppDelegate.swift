@@ -1,14 +1,14 @@
 import UIKit
 import konfios
 
-let KUnit = KTStdlibUnit()
+let KTUnit = KTStdlibUnit()
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     private static let GENERATE_ID_ONCE_KEY = "generateIdOnce"
     static let UUID_KEY = "vendorId"
 
-    public lazy var konfService = KTKotlinConfApi(userId: self.userUuid)
+    public lazy var konfService = KTKonfAppDataModel(user: self.userUuid)
 
     var window: UIWindow?
 
