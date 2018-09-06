@@ -1,8 +1,9 @@
 import UIKit
+import konfios
 
 class VoteViewController : UIViewController {
     private let konfService = AppDelegate.me.konfService
-    var session: KSFSession!
+    var session: KTSession!
 
     @IBOutlet private weak var titleLabel: UILabel!
 
@@ -17,10 +18,10 @@ class VoteViewController : UIViewController {
         }
     }
 
-    private func highlightRatingButtons(rating: KSFSessionRating? = nil) {
+    private func highlightRatingButtons(rating: KTSessionRating? = nil) {
         let currentRating = rating ?? konfService.getRating(session: session)
 
-        let buttons: [KSFSessionRating: UIButton] = [
+        let buttons: [KTSessionRating: UIButton] = [
             .good: goodButton,
             .ok: sosoButton,
             .bad: badButton

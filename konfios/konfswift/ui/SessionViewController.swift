@@ -1,11 +1,12 @@
 import UIKit
 import TagListView_ObjC
+import konfios
 
 class SessionViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     private let konfService = AppDelegate.me.konfService
 
-    var session: KSFSession!
-    var speakers: [KSFSpeaker] = []
+    var session: KTSession!
+    var speakers: [KTSpeaker] = []
 
     @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -147,7 +148,7 @@ class SessionUserTableViewCell : UITableViewCell {
         self.selectedBackgroundView = bgColorView
     }
 
-    func setup(for user: KSFSpeaker) {
+    func setup(for user: KTSpeaker) {
         nameLabel.text = user.fullName ?? "Anonymous"
         icon.loadUserIcon(url: user.profilePicture)
     }

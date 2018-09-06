@@ -1,11 +1,11 @@
 import UIKit
-
+import konfios
 
 class SessionsViewController: UITableViewController {
     private static let SEND_ID_ONCE_KEY = "send_uuid_once"
     private lazy var konfService = AppDelegate.me.konfService
-    private var mode: KSFKonfServiceSessionsListMode = .all
-    private var sessionsTableData: [[KSFSession]] = []
+//    private var mode: KTKonfServiceSessionsListMode = .all
+    private var sessionsTableData: [[KTSession]] = []
 
     @IBOutlet weak var pullToRefresh: UIRefreshControl!
 
@@ -32,12 +32,16 @@ class SessionsViewController: UITableViewController {
         let userDefaults = UserDefaults.standard
         guard !userDefaults.bool(forKey: SessionsViewController.SEND_ID_ONCE_KEY) else { return false }
         
-        konfService.register().then(block: { (result) -> KSFStdlibUnit in
-            self.refreshSessions(self)
-            
-            userDefaults.set(result as! Bool, forKey: SessionsViewController.SEND_ID_ONCE_KEY)
+        konfService.getAll { (data, error) -> KTStdlibUnit in
             return KUnit
-        })
+        }
+        
+//        konfService.register().then(block: { (result) -> KTStdlibUnit in
+//            self.refreshSessions(self)
+//
+//            userDefaults.set(result as! Bool, forKey: SessionsViewController.SEND_ID_ONCE_KEY)
+//            return KUnit
+//        })
         return true
     }
     
@@ -46,29 +50,32 @@ class SessionsViewController: UITableViewController {
     }
 
     @IBAction func refreshSessions(_ sender: Any) {
-        konfService.refresh().then { (result) -> StdlibUnit in
-            self.pullToRefresh?.endRefreshing()
-            self.updateTableContent()
-            return KUnit
-        }.catch { (error) -> StdlibUnit in
-            self.showPopupText(title: "Failed to refresh")
+        konfService.getAll { (data, error) -> KTStdlibUnit in
             return KUnit
         }
+//        konfService.refresh().then { (result) -> KTStdlibUnit in
+//            self.pullToRefresh?.endRefreshing()
+//            self.updateTableContent()
+//            return KUnit
+//        }.catch { (error) -> KTStdlibUnit in
+//            self.showPopupText(title: "Failed to refresh")
+//            return KUnit
+//        }
     }
 
     private func refreshFavorites() {
-        konfService.refresh().then { (result) -> KSFStdlibUnit in
-            if (self.mode == .favorites) {
-                self.updateTableContent()
-            }
-            return KUnit
-        }.catch { (error) -> KSFStdlibUnit in
-            return KUnit
-        }
+//        konfService.refresh().then { (result) -> KTStdlibUnit in
+//            if (self.mode == .favorites) {
+//                self.updateTableContent()
+//            }
+//            return KUnit
+//        }.catch { (error) -> KTStdlibUnit in
+//            return KUnit
+//        }
     }
 
     private func refreshVotes() {
-        konfService.refresh()
+//        konfService.refresh()
     }
     
     /**
@@ -78,12 +85,12 @@ class SessionsViewController: UITableViewController {
     private func updateTableContent() {
         switch self.mode {
         case .all:
-            fillDataWith(sessions: konfService.sessions)
+//            fillDataWith(sessions: konfService.sessions)
             break
         case .favorites:
-            fillDataWith(sessions: konfService.sessions.filter({ (session) -> Bool in
-                return konfService.isFavorite(session: session)
-            }))
+//            fillDataWith(sessions: konfService.sessions.filter({ (session) -> Bool in
+//                return konfService.isFavorite(session: session)
+//            }))
             break
         default:
             break
@@ -92,25 +99,25 @@ class SessionsViewController: UITableViewController {
         self.tableView?.reloadData()        
     }
     
-    private func fillDataWith(sessions: [KSFSession]) {
-        let sortedSessions = sessions.sorted(by: { (left, right) -> Bool in
-            let byComparator = left.compareTo(other: right)
-            if byComparator != 0 { return byComparator < 0 }
-            if left.roomId != right.roomId { return left.roomId!.compare(right.roomId!).rawValue > 0 }
-            if left.id != right.id { return left.id!.compare(right.id!).rawValue > 0 }
-            return false
-        })
-
-        sessionsTableData = []
-        sortedSessions.forEach({ (session) in
-            if sessionsTableData.count == 0 ||
-                sessionsTableData.last!.first!.startsAt!.compareTo(otherDate: session.startsAt!) != 0 {
-                sessionsTableData.append([session]);
-                return
-            }
-            
-            sessionsTableData[sessionsTableData.count - 1].append(session)
-        })
+    private func fillDataWith(sessions: [KTSession]) {
+//        let sortedSessions = sessions.sorted(by: { (left, right) -> Bool in
+//            let byComparator = left.compareTo(other: right)
+//            if byComparator != 0 { return byComparator < 0 }
+//            if left.roomId != right.roomId { return left.roomId!.compare(right.roomId!).rawValue > 0 }
+//            if left.id != right.id { return left.id!.compare(right.id!).rawValue > 0 }
+//            return false
+//        })
+//
+//        sessionsTableData = []
+//        sortedSessions.forEach({ (session) in
+//            if sessionsTableData.count == 0 ||
+//                sessionsTableData.last!.first!.startsAt!.compareTo(otherDate: session.startsAt!) != 0 {
+//                sessionsTableData.append([session]);
+//                return
+//            }
+//
+//            sessionsTableData[sessionsTableData.count - 1].append(session)
+//        })
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -156,8 +163,8 @@ class SessionsTableViewCell : UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var icon: UIImageView!
 
-    func setup(for session: KSFSession) {
+    func setup(for session: KTSession) {
         titleLabel.text = session.title
-        dateLabel.text = KSFUtil.renderDate(date: session.startsAt!)
+        dateLabel.text = session.startsAt
     }
 }
