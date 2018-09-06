@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		2C024B1A1F7494B400A7EAEC /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C024B191F7494B400A7EAEC /* AboutViewController.swift */; };
+		2C4F0184213ED71700FCD207 /* Pods_konfswift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F0183213ED71700FCD207 /* Pods_konfswift.framework */; };
+		2C4F0185213ED71700FCD207 /* Pods_konfswift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F0183213ED71700FCD207 /* Pods_konfswift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C4F0187213ED71700FCD207 /* Pods_konfswiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F0186213ED71700FCD207 /* Pods_konfswiftTests.framework */; };
+		2C4F0188213ED71700FCD207 /* Pods_konfswiftTests.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F0186213ED71700FCD207 /* Pods_konfswiftTests.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C4F018B213ED72800FCD207 /* konfios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F018A213ED72700FCD207 /* konfios.framework */; };
+		2C4F018C213ED72800FCD207 /* konfios.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C4F018A213ED72700FCD207 /* konfios.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C50FD941F729FE000B3F845 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C50FD931F729FE000B3F845 /* AppDelegate.swift */; };
 		2C50FD991F729FE000B3F845 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C50FD971F729FE000B3F845 /* Main.storyboard */; };
 		2C50FD9E1F729FE000B3F845 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C50FD9D1F729FE000B3F845 /* Assets.xcassets */; };
@@ -17,11 +23,7 @@
 		2C6393441F743F2F004953A3 /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6393431F743F2F004953A3 /* SessionViewController.swift */; };
 		2C6393481F743F73004953A3 /* UiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6393471F743F73004953A3 /* UiUtils.swift */; };
 		2C63934D1F745CBE004953A3 /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C63934C1F745CBE004953A3 /* VoteViewController.swift */; };
-		2CB49F4D213973D60021FB79 /* konf_swift_framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB49F4A213973BC0021FB79 /* konf_swift_framework.framework */; };
 		2CB49F4E213973E50021FB79 /* Pods-konfswiftTests.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3F8F328F75A7A47133925362 /* Pods-konfswiftTests.release.xcconfig */; };
-		82C4058F8B9B8596DB537272 /* Pods_konfswift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87320A424782A8660617C3A8 /* Pods_konfswift.framework */; };
-		AED4C0B52C52BDA7217694F1 /* Pods_konfswiftTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99D4C7A4659C4292E0497583 /* Pods_konfswiftTests.framework */; };
-		B3F8ECF120652B63006020B0 /* konf_swift_framework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B3F8ECEC20652B4A006020B0 /* konf_swift_framework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,13 +37,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B3F8ECF220652B63006020B0 /* Embed Frameworks */ = {
+		2C4F0189213ED71700FCD207 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B3F8ECF120652B63006020B0 /* konf_swift_framework.framework in Embed Frameworks */,
+				2C4F0188213ED71700FCD207 /* Pods_konfswiftTests.framework in Embed Frameworks */,
+				2C4F018C213ED72800FCD207 /* konfios.framework in Embed Frameworks */,
+				2C4F0185213ED71700FCD207 /* Pods_konfswift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,6 +54,9 @@
 
 /* Begin PBXFileReference section */
 		2C024B191F7494B400A7EAEC /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		2C4F0183213ED71700FCD207 /* Pods_konfswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_konfswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C4F0186213ED71700FCD207 /* Pods_konfswiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_konfswiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C4F018A213ED72700FCD207 /* konfios.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = konfios.framework; path = build/konan/bin/xcode/konfios.framework; sourceTree = "<group>"; };
 		2C50FD901F729FE000B3F845 /* konfswift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = konfswift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C50FD931F729FE000B3F845 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C50FD981F729FE000B3F845 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -64,14 +71,10 @@
 		2C6393471F743F73004953A3 /* UiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UiUtils.swift; sourceTree = "<group>"; };
 		2C63934B1F744CA4004953A3 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		2C63934C1F745CBE004953A3 /* VoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoteViewController.swift; sourceTree = "<group>"; };
-		2CB49F4A213973BC0021FB79 /* konf_swift_framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = konf_swift_framework.framework; path = build/konan/bin/xcode/konf_swift_framework.framework; sourceTree = "<group>"; };
 		3AD1B286AB3044DE546C83D1 /* Pods-konfswift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-konfswift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-konfswift/Pods-konfswift.debug.xcconfig"; sourceTree = "<group>"; };
 		3F8F328F75A7A47133925362 /* Pods-konfswiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-konfswiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-konfswiftTests/Pods-konfswiftTests.release.xcconfig"; sourceTree = "<group>"; };
 		82B39A882B392FCA825017DE /* Pods-konfswiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-konfswiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-konfswiftTests/Pods-konfswiftTests.debug.xcconfig"; sourceTree = "<group>"; };
-		87320A424782A8660617C3A8 /* Pods_konfswift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_konfswift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		99D4C7A4659C4292E0497583 /* Pods_konfswiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_konfswiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A41FE60CFCB7748B63FEC8FD /* Pods-konfswift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-konfswift.release.xcconfig"; path = "Pods/Target Support Files/Pods-konfswift/Pods-konfswift.release.xcconfig"; sourceTree = "<group>"; };
-		B3F8ECEC20652B4A006020B0 /* konf_swift_framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = konf_swift_framework.framework; path = build/konan/bin/xcode/konf_swift_framework.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,8 +82,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CB49F4D213973D60021FB79 /* konf_swift_framework.framework in Frameworks */,
-				82C4058F8B9B8596DB537272 /* Pods_konfswift.framework in Frameworks */,
+				2C4F0187213ED71700FCD207 /* Pods_konfswiftTests.framework in Frameworks */,
+				2C4F018B213ED72800FCD207 /* konfios.framework in Frameworks */,
+				2C4F0184213ED71700FCD207 /* Pods_konfswift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AED4C0B52C52BDA7217694F1 /* Pods_konfswiftTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,7 +101,9 @@
 		2C50FD871F729FE000B3F845 = {
 			isa = PBXGroup;
 			children = (
-				2CB49F4A213973BC0021FB79 /* konf_swift_framework.framework */,
+				2C4F018A213ED72700FCD207 /* konfios.framework */,
+				2C4F0186213ED71700FCD207 /* Pods_konfswiftTests.framework */,
+				2C4F0183213ED71700FCD207 /* Pods_konfswift.framework */,
 				2C63934B1F744CA4004953A3 /* LICENSE.md */,
 				2C50FD921F729FE000B3F845 /* konfswift */,
 				2C50FDAA1F729FE000B3F845 /* konfswiftTests */,
@@ -181,9 +186,6 @@
 		C4FEB15DDCA083DE8665D19F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B3F8ECEC20652B4A006020B0 /* konf_swift_framework.framework */,
-				87320A424782A8660617C3A8 /* Pods_konfswift.framework */,
-				99D4C7A4659C4292E0497583 /* Pods_konfswiftTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,7 +203,7 @@
 				2C50FD8D1F729FE000B3F845 /* Frameworks */,
 				2C50FD8E1F729FE000B3F845 /* Resources */,
 				0C832F21F31C62782FFBD7A2 /* [CP] Embed Pods Frameworks */,
-				B3F8ECF220652B63006020B0 /* Embed Frameworks */,
+				2C4F0189213ED71700FCD207 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -365,7 +367,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export JAVA_HOME=`/usr/libexec/java_home -v 1.8`\n\ncase \"$PLATFORM_NAME\" in\niphoneos)\nTARGET=ios_arm64\nTASK=compileDebugIos_arm64KotlinNative\n;;\niphonesimulator)\nTARGET=ios_x64\nTASK=compileDebugIos_x64KotlinNative\n;;\n*)\necho \"Unknown platform: $PLATFORN_NAME\"\nexit 1\n;;\nesac\n\npwd\necho \"$TARGET\"\n\nmkdir -p \"$SRCROOT/build/konan/bin/\"\nrm -rf \"$SRCROOT/build/konan/bin/xcode\"\ncp -r \"$SRCROOT/konf-swift-framework/build/lib/main/debug/$TARGET\" \"$SRCROOT/build/konan/bin/xcode\"\n\n\ncd ..\n\"$SRCROOT/../gradlew\" -p \"$SRCROOT/../\" \"$TASK\"";
+			shellScript = "export JAVA_HOME=`/usr/libexec/java_home -v 1.8`\n\ncase \"$PLATFORM_NAME\" in\niphoneos)\nTARGET=ios_arm64\nTASK=compileDebugIos_arm64KotlinNative\n;;\niphonesimulator)\nTARGET=ios_x64\nTASK=compileDebugIos_x64KotlinNative\n;;\n*)\necho \"Unknown platform: $PLATFORN_NAME\"\nexit 1\n;;\nesac\n\npwd\necho \"$TARGET\"\n\nmkdir -p \"$SRCROOT/build/konan/bin/\"\nrm -rf \"$SRCROOT/build/konan/bin/xcode\"\ncp -r \"$SRCROOT/build/lib/main/debug/$TARGET\" \"$SRCROOT/build/konan/bin/xcode\"\n\ncd ..\n\"$SRCROOT/../gradlew\" -p \"$SRCROOT/../\" \"$TASK\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

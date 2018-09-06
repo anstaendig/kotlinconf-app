@@ -1,6 +1,8 @@
 package org.jetbrains.kotlinconf.data
 
-//@Serializable
+import kotlinx.serialization.*
+
+@Serializable
 data class Session(
     val id: String,
     val isServiceSession: Boolean,

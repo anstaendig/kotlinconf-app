@@ -4,7 +4,7 @@ enableFeaturePreview('GRADLE_METADATA')
 
 include 'backend'
 include 'common'
-include ':konf-swift-framework'
+include 'konfios'
 
 //include 'web' TODO: Fixme
 //include 'common-js'
@@ -12,5 +12,3 @@ include ':konf-swift-framework'
 if (INCLUDE_ANDROID == "true") {
     include 'android', 'android:app'
 }
-
-project(':konf-swift-framework').projectDir = file('./ios/konf-swift-framework')

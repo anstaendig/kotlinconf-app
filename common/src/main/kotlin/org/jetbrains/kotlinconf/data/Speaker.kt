@@ -1,6 +1,8 @@
 package org.jetbrains.kotlinconf.data
 
-//@Serializable
+import kotlinx.serialization.*
+
+@Serializable
 data class Speaker(
     val firstName: String,
     val lastName: String,

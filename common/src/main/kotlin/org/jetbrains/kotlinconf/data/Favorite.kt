@@ -1,6 +1,8 @@
 package org.jetbrains.kotlinconf.data
 
-//@Serializable
+import kotlinx.serialization.*
+
+@Serializable
 class Favorite(
     var sessionId: String
 )

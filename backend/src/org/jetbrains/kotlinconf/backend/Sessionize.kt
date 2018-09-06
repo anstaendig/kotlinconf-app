@@ -7,7 +7,6 @@ import io.ktor.client.call.*
 import io.ktor.client.features.json.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
-import kotlin.coroutines.*
 import org.jetbrains.kotlinconf.data.*
 import java.net.*
 import java.text.*
@@ -41,9 +40,7 @@ val fakeVotingSession = Session(
 )
 
 private val client = HttpClient {
-    install(JsonFeature) {
-        serializer = GsonSerializer()
-    }
+    install(JsonFeature)
 }
 
 fun Application.launchSyncJob(sessionizeUrl: String, sessionizeInterval: Long) {
