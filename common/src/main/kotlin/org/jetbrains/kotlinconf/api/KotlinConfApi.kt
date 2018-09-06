@@ -3,9 +3,11 @@ package org.jetbrains.kotlinconf.api
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.features.json.*
+import io.ktor.client.features.json.serializer.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import kotlinx.coroutines.*
+import kotlinx.serialization.*
 import org.jetbrains.kotlinconf.*
 import org.jetbrains.kotlinconf.data.*
 
@@ -15,7 +17,11 @@ private const val PORT = 8080
 
 class KotlinConfApi(private val userId: String) {
     private val client = HttpClient {
-        install(JsonFeature)
+        install(JsonFeature) {
+            serializer = KotlinxSerializer().apply {
+                setMapper(AllData::class, AllData.serializer())
+            }
+        }
         install(ExpectSuccess)
     }
 

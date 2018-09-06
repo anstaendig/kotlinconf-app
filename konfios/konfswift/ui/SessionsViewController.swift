@@ -25,27 +25,9 @@ class SessionsViewController: UITableViewController {
     }
 
     override func viewDidLoad() {
-        if (mode == .all) {
-            if (!sendUuidIfNeeded()) { self.refreshSessions(self) }
-        } else {
-            self.refreshFavorites()
-            self.refreshVotes()
-        }
+        self.refreshSessions(self)
     }
-    
-    private func sendUuidIfNeeded() -> Bool {
-        let userDefaults = UserDefaults.standard
-        guard !userDefaults.bool(forKey: SessionsViewController.SEND_ID_ONCE_KEY) else { return false }
-        
-//        konfService.register().then(block: { (result) -> KTStdlibUnit in
-//            self.refreshSessions(self)
-//
-//            userDefaults.set(result as! Bool, forKey: SessionsViewController.SEND_ID_ONCE_KEY)
-//            return KUnit
-//        })
-        return true
-    }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.updateTableContent()
     }
@@ -55,7 +37,7 @@ class SessionsViewController: UITableViewController {
             self.pullToRefresh?.endRefreshing()
             
             if (error != nil) {
-                error?.printStackTrace()
+                error?.cause?.printStackTrace()
                 self.showPopupText(title: "Failed to refresh")
             } else {
                 self.updateTableContent()
@@ -63,26 +45,10 @@ class SessionsViewController: UITableViewController {
             return KTUnit
         }
     }
-
-    private func refreshFavorites() {
-//        konfService.refresh().then { (result) -> KTStdlibUnit in
-//            if (self.mode == .favorites) {
-//                self.updateTableContent()
-//            }
-//            return KUnit
-//        }.catch { (error) -> KTStdlibUnit in
-//            return KUnit
-//        }
-    }
-
-    private func refreshVotes() {
-//        konfService.refresh()
-    }
     
     /**
      * Prepare TableView state
      */
-    
     private func updateTableContent() {
         switch self.mode {
         case .all:
@@ -97,14 +63,6 @@ class SessionsViewController: UITableViewController {
     }
     
     private func fillDataWith(sessions: [KTSessionModel]) {
-//        let sortedSessions = sessions.sorted(by: { (left, right) -> Bool in
-//            let byComparator = left.compareTo(other: right)
-//            if byComparator != 0 { return byComparator < 0 }
-//            if left.roomId != right.roomId { return left.roomId!.compare(right.roomId!).rawValue > 0 }
-//            if left.id != right.id { return left.id!.compare(right.id!).rawValue > 0 }
-//            return false
-//        })
-
         sessionsTableData = []
         sessions.forEach({ (session) in
             if sessionsTableData.count == 0 ||

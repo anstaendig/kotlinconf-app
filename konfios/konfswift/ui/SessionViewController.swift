@@ -62,11 +62,14 @@ class SessionViewController : UIViewController, UITableViewDataSource, UITableVi
     }
 
     @IBAction func favorited(_ sender: Any) {
-//        konfService.toggleFavorite(session: session).then { (result) -> KTStdlibUnit in
-//            let favorite = result as! NSNumber
-//            self.updateFavoriteButtonTitle(isFavorite: favorite != 0)
-//            return KTUnit
-//        }
+        let favorite = !konfService.isFavorite(sessionId: session.id)
+        konfService.setFavorite(sessionId: session.id, isFavorite: favorite) { (result, error) -> KTStdlibUnit in
+            if (error != nil) {
+                self.updateFavoriteButtonTitle(isFavorite: favorite)
+            }
+            self.updateFavoriteButtonTitle()
+            return KTUnit
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
