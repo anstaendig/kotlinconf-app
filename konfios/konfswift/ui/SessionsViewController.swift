@@ -1,18 +1,16 @@
 import UIKit
 import konfios
 
-enum SessionsMode {
-    case all
-    case favorites
-}
 
-class SessionsViewController: UITableViewController {
+class SessionsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     private static let SEND_ID_ONCE_KEY = "send_uuid_once"
     private lazy var konfService = AppDelegate.me.konfService
     private var mode = SessionsMode.all
     private var sessionsTableData: [[KTSessionModel]] = []
 
     @IBOutlet weak var pullToRefresh: UIRefreshControl!
+    
+    @IBOutlet var tableView: UITableView!
 
     @IBAction func tabSelected(_ sender: Any) {
         guard let segmentedControl = sender as? UISegmentedControl else { return }
@@ -23,6 +21,7 @@ class SessionsViewController: UITableViewController {
             tableView.scrollToRow(at: IndexPath(item: 0, section: 0), at: .top, animated: true)
         }
     }
+
 
     override func viewDidLoad() {
         self.refreshSessions(self)
@@ -59,7 +58,7 @@ class SessionsViewController: UITableViewController {
             break
         }
 
-        self.tableView?.reloadData()        
+        self.tableView?.reloadData()
     }
     
     private func fillDataWith(sessions: [KTSessionModel]) {
@@ -77,7 +76,6 @@ class SessionsViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-
         switch (segue.identifier ?? "") {
             case "ShowSession":
                 guard
@@ -94,16 +92,17 @@ class SessionsViewController: UITableViewController {
         }
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return sessionsTableData.count
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 0
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if sessionsTableData.count <= section { return 0 }
         return sessionsTableData[section].count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Session", for: indexPath) as! SessionsTableViewCell
         let bucket = indexPath.section
         let row = indexPath.row
@@ -113,13 +112,26 @@ class SessionsViewController: UITableViewController {
     }
 }
 
+enum SessionsMode {
+    case all
+    case favorites
+}
+
 class SessionsTableViewCell : UITableViewCell {
-    @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var icon: UIImageView!
+    @IBOutlet private weak var subtitleLabel: UILabel!
 
     func setup(for session: KTSessionModel) {
         titleLabel.text = session.title
-        dateLabel.text = session.startsAt.toReadableDateTimeString()
+        subtitleLabel.text = session.startsAt.toReadableTimeString()
+    }
+}
+
+class BreakTableViewCell : UITableViewCell {
+    @IBOutlet private weak var titleLabel: UILabel!
+
+    func setup(for session: KTSessionModel) {
+        backgroundColor = UIColor(patternImage: UIImage(named: "striped_bg")!)
+        titleLabel.text = session.title
     }
 }
