@@ -9,8 +9,7 @@ data class Session(
     val isPlenumSession: Boolean,
     val questionAnswers: List<QuestionAnswer>,
     val speakers: List<String>,
-    @SerialName("description")
-    val descriptionText: String,
+    val descriptionText: String?,
     val startsAt: String,
     val title: String,
     val endsAt: String,

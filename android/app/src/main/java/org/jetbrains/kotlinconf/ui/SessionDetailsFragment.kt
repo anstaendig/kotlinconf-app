@@ -150,7 +150,7 @@ class SessionDetailsFragment : Fragment() {
             val time = (session.startsAt to session.endsAt).toReadableString()
             timeTextView.text = time
             detailsTextView.text = listOfNotNull(roomText, category).joinToString(", ")
-            descriptionTextView.text = session.description
+            descriptionTextView.text = session.descriptionText
 
             session.speakers
                 .takeIf { it.size < 3 }

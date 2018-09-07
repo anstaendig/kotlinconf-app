@@ -41,7 +41,7 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
                 setSearchQueryProvider(activity as SearchQueryProvider)
             }
 
-        swipeRefreshLayout.onRefresh {
+        swipeRefreshLayout.setOnRefreshListener {
             launch(UI) { viewModel.updateData() }
         }
 
