@@ -20,6 +20,7 @@ class KotlinConfApi(private val userId: String) {
         install(JsonFeature) {
             serializer = KotlinxSerializer().apply {
                 setMapper(AllData::class, AllData.serializer())
+                setMapper(Favorite::class, Favorite.serializer())
             }
         }
         install(ExpectSuccess)
@@ -45,23 +46,25 @@ class KotlinConfApi(private val userId: String) {
 
     suspend fun postFavorite(favorite: Favorite): Unit = client.post {
         url("favorites")
+        json()
         body = favorite
     }
 
-    suspend fun deleteFavorite(favorite: Favorite): Unit = client.request {
-        method = HttpMethod.Delete
+    suspend fun deleteFavorite(favorite: Favorite): Unit = client.delete {
         url("favorites")
+        json()
         body = favorite
     }
 
     suspend fun postVote(vote: Vote): Unit = client.post {
         url("votes")
+        json()
         body = vote
     }
 
-    suspend fun deleteVote(vote: Vote): Unit = client.request {
-        method = HttpMethod.Delete
+    suspend fun deleteVote(vote: Vote): Unit = client.delete {
         url("votes")
+        json()
         body = vote
     }
 
@@ -94,6 +97,10 @@ class KotlinConfApi(private val userId: String) {
         wrapCallback(callback) {
             deleteVote(vote)
         }
+    }
+
+    private fun HttpRequestBuilder.json() {
+        contentType(ContentType.Application.Json)
     }
 
     private fun HttpRequestBuilder.url(path: String) {

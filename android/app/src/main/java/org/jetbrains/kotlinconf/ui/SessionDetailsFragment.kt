@@ -157,7 +157,7 @@ class SessionDetailsFragment : Fragment() {
                 ?.map { it.profilePicture }
                 ?.apply {
                     forEachIndexed { index, imageUrl ->
-                        speakerImageViews[index].showSpeakerImage(imageUrl)
+                        imageUrl?.let { speakerImageViews[index].showSpeakerImage(it) }
                     }
                 }
         }
