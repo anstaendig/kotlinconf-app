@@ -1,5 +1,6 @@
 package org.jetbrains.kotlinconf.ui
 
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -58,10 +59,10 @@ class SessionDetailsFragment : Fragment() {
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
-        val sessionId = arguments.get(KEY_SESSION_ID) as String
+        val sessionId = arguments?.get(KEY_SESSION_ID) as String
         val viewModel = ViewModelProviders.of(
                 this,
-                ViewModelProviders.DefaultFactory(activity.application))
+                ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application))
                 .get(SessionDetailsViewModel::class.java)
                 .apply { setSession(sessionId) }
 
@@ -81,8 +82,7 @@ class SessionDetailsFragment : Fragment() {
                 if (rating != null) {
                     if (viewModel.rating.value != rating) {
                         viewModel.setRating(rating)
-                    }
-                    else {
+                    } else {
                         viewModel.removeRating()
                     }
                 }
@@ -166,12 +166,11 @@ class SessionDetailsFragment : Fragment() {
         visibility = View.VISIBLE
         Glide.with(this@SessionDetailsFragment)
                 .load(imageUrl)
-                .centerCrop()
                 .into(this)
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater?,
+            inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {

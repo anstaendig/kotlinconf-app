@@ -9,16 +9,16 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
 import android.support.design.widget.AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
-import android.support.design.widget.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PARALLAX
-import android.support.design.widget.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.text.util.Linkify
 import android.view.*
 import android.widget.ImageView
-import org.jetbrains.kotlinconf.*
 import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PARALLAX
+import net.opacapp.multilinecollapsingtoolbar.CollapsingToolbarLayout.LayoutParams.COLLAPSE_MODE_PIN
+import org.jetbrains.kotlinconf.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.toolbar
 import org.jetbrains.anko.design.coordinatorLayout
@@ -48,11 +48,11 @@ class InfoFragment : Fragment(), AnkoComponent<Context> {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater?,
+            inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        return createView(AnkoContext.create(context))
+        return createView(AnkoContext.create(context!!))
     }
 
     override fun createView(ui: AnkoContext<Context>): View = with(ui) {
@@ -89,6 +89,7 @@ class InfoFragment : Fragment(), AnkoComponent<Context> {
                         }
                     }
                 }.lparams(width = matchParent, height = matchParent) {
+
                     scrollFlags = SCROLL_FLAG_SCROLL or SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
                 }
             }.lparams(width = matchParent, height = dip(200))

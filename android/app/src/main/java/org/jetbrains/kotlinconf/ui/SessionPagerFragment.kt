@@ -53,11 +53,11 @@ class SessionPagerFragment : Fragment(), AnkoComponent<Context> {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater?,
+            inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        return createView(AnkoContext.create(context))
+        return createView(AnkoContext.create(context!!))
     }
 
     override fun createView(ui: AnkoContext<Context>): View = with(ui) {

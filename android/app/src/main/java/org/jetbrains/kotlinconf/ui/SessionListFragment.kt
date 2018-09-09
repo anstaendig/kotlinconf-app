@@ -1,8 +1,8 @@
 package org.jetbrains.kotlinconf.ui
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
-import android.arch.lifecycle.ViewModelProviders.DefaultFactory
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -10,9 +10,9 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewPager.SCROLL_STATE_IDLE
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,13 +20,13 @@ import android.widget.TextView
 import com.brandongogetap.stickyheaders.StickyLayoutManager
 import com.brandongogetap.stickyheaders.exposed.StickyHeader
 import com.brandongogetap.stickyheaders.exposed.StickyHeaderHandler
-import org.jetbrains.kotlinconf.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.*
 import org.jetbrains.anko.recyclerview.v7.recyclerView
 import org.jetbrains.anko.support.v4.onRefresh
 import org.jetbrains.anko.support.v4.swipeRefreshLayout
+import org.jetbrains.kotlinconf.*
 
 abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
     private lateinit var sessionsRecyclerView: RecyclerView
@@ -39,7 +39,9 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val viewModel = ViewModelProviders.of(this, DefaultFactory(activity.application))
+        val viewModel = ViewModelProviders.of(
+                this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(activity!!.application))
                 .get(SessionListViewModel::class.java)
                 .apply {
                     setNavigationManager(activity as NavigationManager)
@@ -50,7 +52,7 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
             launch(UI) { viewModel.updateData() }
         }
 
-        sessionsAdapter = SessionsAdapter(context, viewModel::showSessionDetails)
+        sessionsAdapter = SessionsAdapter(context!!, viewModel::showSessionDetails)
         sessionsRecyclerView.layoutManager = StickyLayoutManager(context, sessionsAdapter).apply {
             elevateHeaders(2)
         }
@@ -68,7 +70,7 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (newState == SCROLL_STATE_IDLE) {
-                    sessionsListState = recyclerView.layoutManager.onSaveInstanceState()
+                    sessionsListState = recyclerView.layoutManager!!.onSaveInstanceState()
                 }
             }
         })
@@ -78,7 +80,7 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
         }
 
         sessionsListState?.let {
-            sessionsRecyclerView.layoutManager.onRestoreInstanceState(it)
+            sessionsRecyclerView.layoutManager!!.onRestoreInstanceState(it)
         }
     }
 
@@ -92,7 +94,7 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        return createView(AnkoContext.create(activity))
+        return createView(AnkoContext.create(activity!!))
     }
 
     override fun createView(ui: AnkoContext<Context>): View = with(ui) {
@@ -174,7 +176,7 @@ abstract class SessionListFragment : Fragment(), AnkoComponent<Context> {
 
     data class HeaderItem(val title: String) : StickyHeader
 
-    class HeaderViewHolder(view: View) :  RecyclerView.ViewHolder(view) {
+    class HeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val titleTextView = view.find<TextView>(R.id.session_list_header_title)
         fun setTitle(title: String) {
             titleTextView.text = title
